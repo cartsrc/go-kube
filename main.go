@@ -1,15 +1,17 @@
 package main
 
 import (
-	"log"
-	"net/http"
+    "fmt"
+    "log"
+    "net/http"
 )
 
+var version = "v0"
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		_, _ = w.Write([]byte("v0.2.1"))
-	})
-	if err := http.ListenAndServe("0.0.0.0:8080", nil); err != nil {
-		log.Fatalf("Failed to start http server. Err-%v", err)
-	}
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "Welcome to my website! Version %s", version)
+    })
+    fmt.Printf("App is starting, version: %s \n", version)
+    log.Fatal(http.ListenAndServe(":8500", nil))
 }
